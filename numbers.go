@@ -1,8 +1,9 @@
 package openrtb
 
 import (
-	"encoding/json"
 	"strconv"
+
+	"github.com/bytedance/sonic"
 )
 
 // NumberOrString attempts to fix OpenRTB incompatibilities
@@ -16,9 +17,9 @@ func (n *NumberOrString) UnmarshalJSON(data []byte) (err error) {
 	var v int
 
 	if len(data) > 2 && data[0] == '"' && data[len(data)-1] == '"' {
-		err = json.Unmarshal(data[1:len(data)-1], &v)
+		err = sonic.Unmarshal(data[1:len(data)-1], &v)
 	} else {
-		err = json.Unmarshal(data, &v)
+		err = sonic.Unmarshal(data, &v)
 	}
 	if err != nil {
 		return err
@@ -38,13 +39,13 @@ type StringOrNumber string
 func (n *StringOrNumber) UnmarshalJSON(data []byte) error {
 	if len(data) >= 2 && data[0] == '"' && data[len(data)-1] == '"' {
 		var v string
-		if err := json.Unmarshal(data, &v); err != nil {
+		if err := sonic.Unmarshal(data, &v); err != nil {
 			return err
 		}
 		*n = StringOrNumber(v)
 	} else {
 		var v int
-		if err := json.Unmarshal(data, &v); err != nil {
+		if err := sonic.Unmarshal(data, &v); err != nil {
 			return err
 		}
 		*n = StringOrNumber(strconv.Itoa(v))

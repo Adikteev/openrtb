@@ -1,6 +1,10 @@
 package openrtb
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/bytedance/sonic"
+)
 
 // ContentCategory as defined in section 5.1
 type ContentCategory string
@@ -634,9 +638,9 @@ func (n *ContentContext) UnmarshalJSON(data []byte) (err error) {
 	var v int
 
 	if len(data) > 2 && data[0] == '"' && data[len(data)-1] == '"' {
-		err = json.Unmarshal(data[1:len(data)-1], &v)
+		err = sonic.Unmarshal(data[1:len(data)-1], &v)
 	} else {
-		err = json.Unmarshal(data, &v)
+		err = sonic.Unmarshal(data, &v)
 	}
 	if err != nil {
 		return err

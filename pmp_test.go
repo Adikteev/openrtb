@@ -2,11 +2,11 @@ package openrtb_test
 
 import (
 	"bytes"
-	"encoding/json"
 	"reflect"
 	"testing"
 
 	. "github.com/bsm/openrtb/v3"
+	"github.com/bytedance/sonic"
 )
 
 func TestPMP(t *testing.T) {
@@ -30,7 +30,7 @@ func TestPMP(t *testing.T) {
 func TestPMP_MarshalJSON(t *testing.T) {
 	subject := &PMP{Deals: []Deal{{}}}
 	exp := []byte(`{"deals":[{"at":2}]}`)
-	if got, err := json.Marshal(subject); err != nil {
+	if got, err := sonic.Marshal(subject); err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	} else if !bytes.Equal(exp, got) {
 		t.Errorf("expected %+v, got %+v", exp, got)
