@@ -1,6 +1,10 @@
 package openrtb
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"github.com/bytedance/sonic"
+)
 
 // PMP is the Private Marketplace Object
 type PMP struct {
@@ -25,13 +29,13 @@ type jsonDeal Deal
 // MarshalJSON custom marshalling with normalization
 func (d *Deal) MarshalJSON() ([]byte, error) {
 	d.normalize()
-	return json.Marshal((*jsonDeal)(d))
+	return sonic.Marshal((*jsonDeal)(d))
 }
 
 // UnmarshalJSON custom unmarshalling with normalization
 func (d *Deal) UnmarshalJSON(data []byte) error {
 	var h jsonDeal
-	if err := json.Unmarshal(data, &h); err != nil {
+	if err := sonic.Unmarshal(data, &h); err != nil {
 		return err
 	}
 

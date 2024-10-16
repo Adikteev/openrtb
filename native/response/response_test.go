@@ -1,12 +1,12 @@
 package response_test
 
 import (
-	"encoding/json"
 	"os"
 	"reflect"
 	"testing"
 
 	. "github.com/bsm/openrtb/v3/native/response"
+	"github.com/bytedance/sonic"
 )
 
 func TestResponse(t *testing.T) {
@@ -42,5 +42,5 @@ func fixture(path string, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	return json.Unmarshal(bin, v)
+	return sonic.Unmarshal(bin, v)
 }

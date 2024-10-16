@@ -3,6 +3,8 @@ package openrtb
 import (
 	"encoding/json"
 	"errors"
+
+	"github.com/bytedance/sonic"
 )
 
 // Validation errors
@@ -46,13 +48,13 @@ func (a *Audio) Validate() error {
 // MarshalJSON custom marshalling with normalization
 func (a *Audio) MarshalJSON() ([]byte, error) {
 	a.normalize()
-	return json.Marshal((*jsonAudio)(a))
+	return sonic.Marshal((*jsonAudio)(a))
 }
 
 // UnmarshalJSON custom unmarshalling with normalization
 func (a *Audio) UnmarshalJSON(data []byte) error {
 	var h jsonAudio
-	if err := json.Unmarshal(data, &h); err != nil {
+	if err := sonic.Unmarshal(data, &h); err != nil {
 		return err
 	}
 

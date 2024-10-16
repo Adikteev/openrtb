@@ -1,10 +1,11 @@
 package openrtb
 
 import (
-	"encoding/json"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/bytedance/sonic"
 )
 
 func BenchmarkBidRequest_Unmarshal(b *testing.B) {
@@ -16,7 +17,7 @@ func BenchmarkBidRequest_Unmarshal(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		var req *BidRequest
-		if err := json.Unmarshal(data, &req); err != nil {
+		if err := sonic.Unmarshal(data, &req); err != nil {
 			b.Fatal(err.Error())
 		}
 	}
@@ -29,13 +30,13 @@ func BenchmarkBidRequest_Marshal(b *testing.B) {
 	}
 
 	var req *BidRequest
-	if err := json.Unmarshal(data, &req); err != nil {
+	if err := sonic.Unmarshal(data, &req); err != nil {
 		b.Fatal(err.Error())
 	}
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		if _, err := json.Marshal(req); err != nil {
+		if _, err := sonic.Marshal(req); err != nil {
 			b.Fatal(err.Error())
 		}
 	}
