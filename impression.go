@@ -36,6 +36,7 @@ type Impression struct {
 	Exp                   int             `json:"exp,omitempty"`               // Advisory as to the number of seconds that may elapse between the auction and the actual impression.
 	IFrameBusters         []string        `json:"iframebuster,omitempty"`      // Array of names for supportediframe busters.
 	Rewarded              int             `json:"rwdd,omitempty"`              // Impression is rewarded, Default: 0 ("1": yes, "0": no)
+	Metric                []Metric        `json:"metric,omitempty"`
 	Ext                   json.RawMessage `json:"ext,omitempty"`
 }
 
