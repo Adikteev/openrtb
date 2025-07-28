@@ -9,11 +9,12 @@ on:
       - reopened
       - synchronize
 
-
-
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [ 1.18.x, 1.19.x ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,7 +22,7 @@ jobs:
       - name: Setup Golang
         uses: actions/setup-go@v4
         with:
-          go-version: "^1.24"
+          go-version: ${{ matrix.go-version }}
 
       - name: Generate msgpack files
         run: make generate-msgp
