@@ -18,6 +18,10 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
           cache: true
+
+      - name: Generate msgpack files
+        run: make generate-msgp
+
       - run: make test
   golangci:
     runs-on: ubuntu-latest
@@ -27,6 +31,10 @@ jobs:
         with:
           go-version: 1.x
           cache: true
+
+      - name: Generate msgpack files
+        run: make generate-msgp
+        
       - uses: golangci/golangci-lint-action@v3
         with:
           version: latest
