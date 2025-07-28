@@ -1,6 +1,8 @@
 package openrtb
 
-import "encoding/json"
+import (
+	"github.com/tinylib/msgp/msgp"
+)
 
 //go:generate .deps/msgp
 //msgp:ignore Site
@@ -17,7 +19,7 @@ type Inventory struct {
 	Publisher         *Publisher        `json:"publisher,omitempty" msgp:"publisher,omitempty"`         // Details about the Publisher
 	Content           *Content          `json:"content,omitempty" msgp:"content,omitempty"`             // Details about the Content
 	Keywords          string            `json:"keywords,omitempty" msgp:"keywords,omitempty"`           // Comma separated list of keywords about the site.
-	Ext               json.RawMessage   `json:"ext,omitempty" msgp:"ext,omitempty"`
+	Ext               msgp.Raw          `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // GetPrivacyPolicy returns the privacy policy value

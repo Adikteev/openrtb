@@ -1,8 +1,8 @@
 package openrtb
 
 import (
-	"encoding/json"
 	"errors"
+	"github.com/tinylib/msgp/msgp"
 )
 
 //go:generate .deps/msgp
@@ -25,7 +25,7 @@ type Quantity struct {
 	Multiplier float64               `json:"multiplier" msgp:"multiplier"`
 	SourceType MeasurementSourceType `json:"sourcetype,omitempty" msgp:"sourcetype,omitempty"`
 	Vendor     string                `json:"vendor,omitempty" msgp:"vendor,omitempty"`
-	Ext        *json.RawMessage      `json:"ext,omitempty" msgp:"ext,omitempty"`
+	Ext        *msgp.Raw             `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 func (qty *Quantity) Validate() error {

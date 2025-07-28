@@ -1,7 +1,6 @@
 package openrtb
 
 import (
-	"encoding/json"
 	"github.com/tinylib/msgp/msgp"
 
 	"github.com/bytedance/sonic"
@@ -758,11 +757,11 @@ const (
 
 // ThirdParty abstract attributes.
 type ThirdParty struct {
-	ID         string            `json:"id,omitempty"`
-	Name       string            `json:"name,omitempty"`
-	Categories []ContentCategory `json:"cat,omitempty"` // Array of IAB content categories
-	Domain     string            `json:"domain,omitempty"`
-	Ext        json.RawMessage   `json:"ext,omitempty"`
+	ID         string            `json:"id,omitempty" msgp:"id,omitempty"`
+	Name       string            `json:"name,omitempty" msgp:"name,omitempty"`
+	Categories []ContentCategory `json:"cat,omitempty" msgp:"cat,omitempty"` // Array of IAB content categories
+	Domain     string            `json:"domain,omitempty" msgp:"domain,omitempty"`
+	Ext        msgp.Raw          `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // Publisher object itself and all of its parameters are optional, so default values are not
@@ -780,20 +779,20 @@ type Producer ThirdParty
 // (such as IP geo lookup), or by user registration information (for example provided to a publisher
 // through a user registration).
 type Geo struct {
-	Latitude      float64         `json:"lat,omitempty"`           // Latitude from -90 to 90
-	Longitude     float64         `json:"lon,omitempty"`           // Longitude from -180 to 180
-	Type          LocationType    `json:"type,omitempty"`          // Indicate the source of the geo data
-	Accuracy      int             `json:"accuracy,omitempty"`      // Estimated location accuracy in meters; recommended when lat/lon are specified and derived from a device’s location services
-	LastFix       int             `json:"lastfix,omitempty"`       // Number of seconds since this geolocation fix was established.
-	IPService     IPLocation      `json:"ipservice,omitempty"`     // Service or provider used to determine geolocation from IP address if applicable
-	Country       string          `json:"country,omitempty"`       // Country using ISO 3166-1 Alpha 3
-	Region        string          `json:"region,omitempty"`        // Region using ISO 3166-2
-	RegionFIPS104 string          `json:"regionFIPS104,omitempty"` // Region of a country using FIPS 10-4
-	Metro         string          `json:"metro,omitempty"`
-	City          string          `json:"city,omitempty"`
-	ZIP           string          `json:"zip,omitempty"`
-	UTCOffset     int             `json:"utcoffset,omitempty"` // Local time as the number +/- of minutes from UTC
-	Ext           json.RawMessage `json:"ext,omitempty"`
+	Latitude      float64      `json:"lat,omitempty" msgp:"lat,omitempty"`                     // Latitude from -90 to 90
+	Longitude     float64      `json:"lon,omitempty" msgp:"lon,omitempty"`                     // Longitude from -180 to 180
+	Type          LocationType `json:"type,omitempty" msgp:"type,omitempty"`                   // Indicate the source of the geo data
+	Accuracy      int          `json:"accuracy,omitempty" msgp:"accuracy,omitempty"`           // Estimated location accuracy in meters; recommended when lat/lon are specified and derived from a device’s location services
+	LastFix       int          `json:"lastfix,omitempty" msgp:"lastfix,omitempty"`             // Number of seconds since this geolocation fix was established.
+	IPService     IPLocation   `json:"ipservice,omitempty" msgp:"ipservice,omitempty"`         // Service or provider used to determine geolocation from IP address if applicable
+	Country       string       `json:"country,omitempty" msgp:"country,omitempty"`             // Country using ISO 3166-1 Alpha 3
+	Region        string       `json:"region,omitempty" msgp:"region,omitempty"`               // Region using ISO 3166-2
+	RegionFIPS104 string       `json:"regionFIPS104,omitempty" msgp:"regionFIPS104,omitempty"` // Region of a country using FIPS 10-4
+	Metro         string       `json:"metro,omitempty" msgp:"metro,omitempty"`
+	City          string       `json:"city,omitempty" msgp:"city,omitempty"`
+	ZIP           string       `json:"zip,omitempty" msgp:"zip,omitempty"`
+	UTCOffset     int          `json:"utcoffset,omitempty" msgp:"utcoffset,omitempty"` // Local time as the number +/- of minutes from UTC
+	Ext           msgp.Raw     `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // User object contains information known or derived about the human user of the device (i.e., the
@@ -818,42 +817,42 @@ type User struct {
 // the id field. A bid request can mix data objects from multiple providers. The specific data providers in
 // use should be published by the exchange a priori to its bidders.
 type Data struct {
-	ID      string          `json:"id,omitempty"`
-	Name    string          `json:"name,omitempty"`
-	Segment []Segment       `json:"segment,omitempty"`
-	Ext     json.RawMessage `json:"ext,omitempty"`
+	ID      string    `json:"id,omitempty" msgp:"id,omitempty"`
+	Name    string    `json:"name,omitempty" msgp:"name,omitempty"`
+	Segment []Segment `json:"segment,omitempty" msgp:"segment,omitempty"`
+	Ext     msgp.Raw  `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // Segment objects are essentially key-value pairs that convey specific units of data about the user. The
 // parent Data object is a collection of such values from a given data provider. The specific segment
 // names and value options must be published by the exchange a priori to its bidders.
 type Segment struct {
-	ID    string          `json:"id,omitempty"`
-	Name  string          `json:"name,omitempty"`
-	Value string          `json:"value,omitempty"`
-	Ext   json.RawMessage `json:"ext,omitempty"`
+	ID    string   `json:"id,omitempty" msgp:"id,omitempty"`
+	Name  string   `json:"name,omitempty" msgp:"name,omitempty"`
+	Value string   `json:"value,omitempty" msgp:"value,omitempty"`
+	Ext   msgp.Raw `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // Regulations object contains any legal, governmental, or industry regulations that apply to the request. The
 // coppa flag signals whether or not the request falls under the United States Federal Trade Commission's
 // regulations for the United States Children's Online Privacy Protection Act ("COPPA").
 type Regulations struct {
-	COPPA     int             `json:"coppa,omitempty"`      // Flag indicating if this request is subject to the COPPA regulations established by the USA FTC, where 0 = no, 1 = yes.
-	GDPR      int             `json:"gdpr,omitempty"`       // Flag that indicates whether or not the request is subject to GDPR regulations 0 = No, 1 = Yes, omission indicates Unknown.
-	USPrivacy string          `json:"us_privacy,omitempty"` // Communicates signals regarding consumer privacy under US privacy regulation.
-	Ext       json.RawMessage `json:"ext,omitempty"`
+	COPPA     int      `json:"coppa,omitempty" msgp:"coppa,omitempty"`           // Flag indicating if this request is subject to the COPPA regulations established by the USA FTC, where 0 = no, 1 = yes.
+	GDPR      int      `json:"gdpr,omitempty" msgp:"gdpr,omitempty"`             // Flag that indicates whether or not the request is subject to GDPR regulations 0 = No, 1 = Yes, omission indicates Unknown.
+	USPrivacy string   `json:"us_privacy,omitempty" msgp:"us_privacy,omitempty"` // Communicates signals regarding consumer privacy under US privacy regulation.
+	Ext       msgp.Raw `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // Format object represents an allowed size (i.e., height and width combination) for a banner impression.
 // These are typically used in an array for an impression where multiple sizes are permitted.
 // It is recommended that either the w/h pair or the wratio/hratio/wmin set (i.e., for Flex Ads) be specified.
 type Format struct {
-	Width       int             `json:"w,omitempty"`       // Width in device independent pixels (DIPS).
-	Height      int             `json:"h,omitempty"`       // Height in device independent pixels (DIPS).
-	WidthRatio  int             `json:"wratio,omitempty"`  // Relative width when expressing size as a ratio.
-	HeightRatio int             `json:"hration,omitempty"` // Relative height when expressing size as a ratio.
-	WidthMin    int             `json:"wmin,omitempty"`    // The minimum width in device independent pixels (DIPS) at which the ad will be displayed the size is expressed as a ratio.
-	Ext         json.RawMessage `json:"ext,omitempty"`
+	Width       int      `json:"w,omitempty" msgp:"w,omitempty"`             // Width in device independent pixels (DIPS).
+	Height      int      `json:"h,omitempty" msgp:"h,omitempty"`             // Height in device independent pixels (DIPS).
+	WidthRatio  int      `json:"wratio,omitempty" msgp:"wratio,omitempty"`   // Relative width when expressing size as a ratio.
+	HeightRatio int      `json:"hration,omitempty" msgp:"hration,omitempty"` // Relative height when expressing size as a ratio.
+	WidthMin    int      `json:"wmin,omitempty" msgp:"wmin,omitempty"`       // The minimum width in device independent pixels (DIPS) at which the ad will be displayed the size is expressed as a ratio.
+	Ext         msgp.Raw `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 // PodSequence identifies the pod sequence field, for use in video content streams with one or more ad pods as defined in Adcom1.0
@@ -915,8 +914,8 @@ const (
 
 // ChannelEntity describes the network or channel an ad will be displayed on. (Reffer Section 3.2.23 and 3.2.24 OpenRTB_2.6)
 type ChannelEntity struct {
-	ID     string          `json:"id,omitempty"`
-	Name   string          `json:"name,omitempty"`
-	Domain string          `json:"domain,omitempty"`
-	Ext    json.RawMessage `json:"ext,omitempty"`
+	ID     string   `json:"id,omitempty" msgp:"id,omitempty"`
+	Name   string   `json:"name,omitempty" msgp:"name,omitempty"`
+	Domain string   `json:"domain,omitempty" msgp:"domain,omitempty"`
+	Ext    msgp.Raw `json:"ext,omitempty" msgp:"ext,omitempty"`
 }

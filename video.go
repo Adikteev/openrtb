@@ -1,8 +1,8 @@
 package openrtb
 
 import (
-	"encoding/json"
 	"errors"
+	"github.com/tinylib/msgp/msgp"
 
 	"github.com/bytedance/sonic"
 )
@@ -51,7 +51,7 @@ type Video struct {
 	CompanionTypes  []CompanionType     `json:"companiontype,omitempty" msgp:"companiontype,omitempty"`
 	Placement       VideoPlacement      `json:"placement,omitempty" msgp:"placement,omitempty"` // Video placement type, DEPRECATED
 	Plcmt           VideoPlcmt          `json:"plcmt,omitempty" msgp:"plcmt,omitempty"`         // Video Plcmt type ad defined in ADCOM1.0
-	Ext             json.RawMessage     `json:"ext,omitempty" msgp:"ext,omitempty"`
+	Ext             msgp.Raw            `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 type jsonVideo Video

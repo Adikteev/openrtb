@@ -1,6 +1,8 @@
 package openrtb
 
-import "encoding/json"
+import (
+	"github.com/tinylib/msgp/msgp"
+)
 
 //go:generate .deps/msgp
 
@@ -46,5 +48,5 @@ type Metric struct {
 	//   object
 	// Description:
 	//   Placeholder for exchange-specific extensions to OpenRTB.
-	Ext json.RawMessage `json:"ext,omitempty" msgp:"ext,omitempty"`
+	Ext msgp.Raw `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
