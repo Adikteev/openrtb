@@ -1,7 +1,7 @@
 package openrtb_test
 
 import (
-	"encoding/json"
+	"github.com/tinylib/msgp/msgp"
 	"reflect"
 	"testing"
 
@@ -18,7 +18,7 @@ func TestSource(t *testing.T) {
 		FinalSaleDecision: 1,
 		TransactionID:     "transaction-id",
 		PaymentChain:      "payment-chain",
-		Ext:               json.RawMessage("{}"),
+		Ext:               msgp.Raw("{}"),
 	}
 	if got := subject; !reflect.DeepEqual(exp, got) {
 		t.Errorf("expected %+v, got %+v", exp, got)

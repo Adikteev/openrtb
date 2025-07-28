@@ -1,7 +1,7 @@
 package openrtb_test
 
 import (
-	"encoding/json"
+	"github.com/tinylib/msgp/msgp"
 	"reflect"
 	"testing"
 
@@ -15,7 +15,7 @@ func TestNative(t *testing.T) {
 	}
 
 	exp := &Native{
-		Request: json.RawMessage(`"PAYLOAD"`),
+		Request: msgp.Raw(`"PAYLOAD"`),
 		Version: "2",
 	}
 	if got := subject; !reflect.DeepEqual(exp, got) {
