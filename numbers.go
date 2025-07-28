@@ -6,6 +6,8 @@ import (
 	"github.com/bytedance/sonic"
 )
 
+//go:generate .deps/msgp
+
 // NumberOrString attempts to fix OpenRTB incompatibilities
 // of exchanges. On decoding, it can handle numbers and strings.
 // On encoding, it will generate a number, as intended by the

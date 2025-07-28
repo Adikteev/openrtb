@@ -1,6 +1,8 @@
 package openrtb
 
-import "encoding/json"
+import (
+	"github.com/tinylib/msgp/msgp"
+)
 
 // Native object represents a native type impression. Native ad units are intended to blend seamlessly into
 // the surrounding content (e.g., a sponsored Twitter or Facebook post). As such, the response must be
@@ -9,10 +11,12 @@ import "encoding/json"
 // a native type impression. At the publisher’s discretion, that same impression may also be offered as
 // banner and/or video by also including as Imp subordinates the Banner and/or Video objects,
 // respectively. However, any given bid for the impression must conform to one of the offered types.
+
+//go:generate .deps/msgp
 type Native struct {
-	Request      json.RawMessage     `json:"request"`         // Request payload complying with the Native Ad Specification.
-	Version      string              `json:"ver,omitempty"`   // Version of the Native Ad Specification to which request complies; highly recommended for efficient parsing.
-	APIs         []APIFramework      `json:"api,omitempty"`   // List of supported API frameworks for this impression.
-	BlockedAttrs []CreativeAttribute `json:"battr,omitempty"` // Blocked creative attributes
-	Ext          json.RawMessage     `json:"ext,omitempty"`
+	Request      msgp.Raw            `json:"request" msgp:"request"`                 // Request payload complying with the Native Ad Specification.
+	Version      string              `json:"ver,omitempty" msgp:"ver,omitempty"`     // Version of the Native Ad Specification to which request complies; highly recommended for efficient parsing.
+	APIs         []APIFramework      `json:"api,omitempty" msgp:"api,omitempty"`     // List of supported API frameworks for this impression.
+	BlockedAttrs []CreativeAttribute `json:"battr,omitempty" msgp:"battr,omitempty"` // Blocked creative attributes
+	Ext          msgp.Raw            `json:"ext,omitempty" msgp:"ext,omitempty"`
 }

@@ -1,1 +1,9 @@
 *.makefile
+
+.deps
+*_gen.go
+*_gen_test.go
+#native/request/*_gen.go
+#native/request/*_gen_test.go
+#native/reponse/*_gen.go
+#native/reponse/*_gen_test.go

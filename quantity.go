@@ -5,6 +5,8 @@ import (
 	"errors"
 )
 
+//go:generate .deps/msgp
+
 var (
 	ErrMissingMultiplier        = errors.New("openrtb: qty.multiplier is required")
 	ErrMissingMeasurementVendor = errors.New("openrtb: qty.vendor is required when qty.sourcetype is 1 (Measurement Vendor)")
@@ -20,10 +22,10 @@ const (
 )
 
 type Quantity struct {
-	Multiplier float64               `json:"multiplier"`
-	SourceType MeasurementSourceType `json:"sourcetype,omitempty"`
-	Vendor     string                `json:"vendor,omitempty"`
-	Ext        *json.RawMessage       `json:"ext,omitempty"`
+	Multiplier float64               `json:"multiplier" msgp:"multiplier"`
+	SourceType MeasurementSourceType `json:"sourcetype,omitempty" msgp:"sourcetype,omitempty"`
+	Vendor     string                `json:"vendor,omitempty" msgp:"vendor,omitempty"`
+	Ext        *json.RawMessage      `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
 
 func (qty *Quantity) Validate() error {

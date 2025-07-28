@@ -2,6 +2,8 @@ package openrtb
 
 import "encoding/json"
 
+//go:generate .deps/msgp
+
 // 3.2.5 Object: Metric
 //
 // This object is associated with an impression as an array of metrics.
@@ -16,7 +18,7 @@ type Metric struct {
 	// Description:
 	//   Type of metric being presented using exchange curated string
 	//   names which should be published to bidders a priori.
-	Type string `json:"type"`
+	Type string `json:"type" msgp:"type"`
 
 	// Attribute:
 	//   value
@@ -25,7 +27,7 @@ type Metric struct {
 	// Description:
 	//   Number representing the value of the metric. Probabilities
 	//   must be in the range 0.0 – 1.0.
-	Value float64 `json:"value,omitempty"`
+	Value float64 `json:"value,omitempty" msgp:"value,omitempty"`
 
 	// Attribute:
 	//   vendor
@@ -36,7 +38,7 @@ type Metric struct {
 	//   which should be published to bidders a priori. If the exchange
 	//   itself is the source versus a third party, “EXCHANGE” is
 	//   recommended.
-	Vendor string `json:"vendor,omitempty"`
+	Vendor string `json:"vendor,omitempty" msgp:"vendor,omitempty"`
 
 	// Attribute:
 	//   ext
@@ -44,5 +46,5 @@ type Metric struct {
 	//   object
 	// Description:
 	//   Placeholder for exchange-specific extensions to OpenRTB.
-	Ext json.RawMessage `json:"ext,omitempty"`
+	Ext json.RawMessage `json:"ext,omitempty" msgp:"ext,omitempty"`
 }
