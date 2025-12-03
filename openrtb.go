@@ -807,6 +807,7 @@ type User struct {
 	CustomData  string          `json:"customdata,omitempty"` // Optional feature to pass bidder data that was set in the exchange's cookie. The string must be in base85 cookie safe characters and be in any format. Proper JSON encoding must be used to include "escaped" quotation marks.
 	Geo         *Geo            `json:"geo,omitempty"`
 	Data        []Data          `json:"data,omitempty"`
+	Consent     string          `json:"consent,omitempty"`    // When GDPR regulations are in effect this attribute contains the Transparency and Consent Framework's Consent String data structure.
 	Ext         json.RawMessage `json:"ext,omitempty"`
 }
 
